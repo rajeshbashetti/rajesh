@@ -1,5 +1,5 @@
 🌍
-*[Čeština](README-cs.md) ∙ [Deutsch](README-de.md) ∙ [Ελληνικά](README-el.md) ∙ [English](README.md) ∙ [Español](README-es.md) ∙ [Français](README-fr.md) ∙ [Indonesia](README-id.md) ∙ [Italiano](README-it.md) ∙ [日本語](README-ja.md) ∙ [한국어](README-ko.md) ∙ [Português](README-pt.md) ∙ [Română](README-ro.md) ∙ [Русский](README-ru.md) ∙ [Slovenščina](README-sl.md) ∙ [Українська](README-uk.md) ∙ [简体中文](README-zh.md) ∙ [繁體中文](README-zh-Hant.md)*
+*[Čeština](README-cs.md) ∙ [Deutsch](README-de.md) ∙ [Ελληνικά](README-el.md) ∙ [English](README.md) ∙ [Español](README-es.md) ∙ [Français](README-fr.md) ∙ [Indonesia](README-id.md) ∙ [Italiano](README-it.md) ∙ [日本語](README-ja.md) ∙ [한국어](README-ko.md) ∙ [polski](README-pl.md) ∙ [Português](README-pt.md) ∙ [Română](README-ro.md) ∙ [Русский](README-ru.md) ∙ [Slovenščina](README-sl.md) ∙ [Українська](README-uk.md) ∙ [简体中文](README-zh.md) ∙ [繁體中文](README-zh-Hant.md)*
 
 # 命令列的藝術
 
@@ -233,9 +233,13 @@ mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 
 - 二進制檔案對比（Delta 壓縮），使用`xdelta3`。
 
-- 使用 `iconv` 更改文字編碼。而更高階的用法，可以使用`uconv`，它支援一些高階的Unicode 功能。例如，這條命令將所有母音字母轉為小寫並移除了：
+- 轉換文字編碼可使用 `iconv` 或 `uconv`，後者支援 Unicode 相關的進階用法。例如：
 ```sh
-      uconv -f utf-8 -t utf-8 -x '::Any-Lower; ::Any-NFD; [:Nonspacing Mark:] >; ::Any-NFC; ' < input.txt > output.txt
+      # 顯示十六進制碼或字元標準名稱（有益於除錯）
+      uconv -f utf-8 -t utf-8 -x '::Any-Hex;' < input.txt
+      uconv -f utf-8 -t utf-8 -x '::Any-Name;' < input.txt
+      # 將文字轉換為小寫並移除所有重音標記（展開字元並移除標記）：
+      uconv -f utf-8 -t utf-8 -x '::Any-Lower; ::Any-NFD; [:Nonspacing Mark:] >; ::Any-NFC;' < input.txt > output.txt
 ```
 
 - 拆分檔案，檢視`split`（按大小拆分）和`csplit`（按模式拆分）。
